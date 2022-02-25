@@ -1,0 +1,39 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Non",
+      "price": 1600
+    },
+    {
+      "id": 2,
+      "name": "Qatiq",
+      "price": 10000
+    },
+    {
+      "id": 3,
+      "name": "Yogurt",
+      "price": 5750
+    },
+    {
+      "id": 4,
+      "name": "Banan",
+      "price": 17000
+    },
+    {
+      "id": 5,
+      "name": "Olma",
+      "price": 15000
+    },
+    {
+      "id": 6,
+      "name": "Qaymoq",
+      "price": 20000
+    },
+    {
+      "id": 7,
+      "name": "Smetana",
+      "price": 10000
+    }
+  ]
+}
