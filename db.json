@@ -34,6 +34,41 @@
       "id": 7,
       "name": "Smetana",
       "price": 10000
+    },
+    {
+      "id": 8,
+      "name": "Coca cola 1.5l",
+      "price": 9000
+    },
+    {
+      "id": 9,
+      "name": "Pepsi 2l",
+      "price": 12000
+    },
+    {
+      "id": 10,
+      "name": "Moxito fresh",
+      "price": 10000
+    },
+    {
+      "id": 11,
+      "name": "Aloe Vera",
+      "price": 10000
+    },
+    {
+      "id": 12,
+      "name": "Borjomi",
+      "price": 10000
+    },
+    {
+      "id": 13,
+      "name": "Kartoshka qizil",
+      "price": 5500
+    },
+    {
+      "id": 14,
+      "name": "Kartoshka",
+      "price": 4500
     }
   ]
 }

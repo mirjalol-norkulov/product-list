@@ -1,75 +1,52 @@
-<script>
+<script setup>
 import axios from "axios";
 import { NSpace, NPageHeader, NDataTable } from "naive-ui";
+import { ref, reactive, watch, computed } from "vue";
+import { useQueryParamRef } from "~/composables/useQueryParamRef";
 
-export default {
-  components: {
-    NSpace,
-    NPageHeader,
-    NDataTable,
-  },
-  data() {
-    return {
-      products: [],
-      columns: [
-        {
-          title: "No",
-          key: "no",
-          width: 100,
-          render: (_, index) => {
-            return (
-              index + (this.pagination.page - 1) * this.pagination.pageSize + 1
-            );
-          },
-        },
-        { title: "Name", key: "name" },
-        { title: "Price", key: "price" },
-      ],
-      pagination: {
-        page: 1,
-        pageSize: 5,
-        itemCount: 0,
-        onChange: (page) => {
-          this.$router.push({ query: { ...this.$route.query, page } });
-        },
-      },
-      isLoading: false,
-    };
-  },
-  watch: {
-    "$route.query": {
-      immediate: true,
-      deep: true,
-      handler() {
-        this.pagination.page = Number(this.$route.query.page || 1);
-      },
-    },
-    "pagination.page": {
-      immediate: true,
-      handler: "fetchProducts",
-    },
-  },
-  methods: {
-    async fetchProducts() {
-      try {
-        this.status = "loading";
-        const response = await axios.get("http://localhost:8000/products", {
-          params: {
-            _page: this.pagination.page,
-            _limit: this.pagination.pageSize,
-          },
-        });
+const products = ref([]);
+const isLoading = ref(false);
 
-        if (response && response.data) {
-          this.products = response.data;
-        }
-        this.pagination.itemCount = Number(response.headers["x-total-count"]);
-      } finally {
-        this.isLoading = false;
-      }
+const pagination = reactive({
+  page: useQueryParamRef("page", 1),
+  pageSize: useQueryParamRef("limit", 5),
+  itemCount: 0,
+  onChange: (page) => {
+    pagination.page = page;
+  },
+});
+const columns = [
+  {
+    title: "No",
+    key: "no",
+    width: 100,
+    render: (_, index) => {
+      return index + (pagination.page - 1) * pagination.pageSize + 1;
     },
   },
+  { title: "Name", key: "name" },
+  { title: "Price", key: "price" },
+];
+
+const fetchProducts = async () => {
+  try {
+    isLoading.value = true;
+    const response = await axios.get("http://localhost:8000/products", {
+      params: {
+        _page: pagination.page,
+        _limit: pagination.pageSize,
+      },
+    });
+
+    if (response && response.data) {
+      products.value = response.data;
+    }
+    pagination.itemCount = Number(response.headers["x-total-count"]);
+  } finally {
+    isLoading.value = false;
+  }
 };
+watch(() => pagination.page, fetchProducts, { immediate: true });
 </script>
 
 <template>
